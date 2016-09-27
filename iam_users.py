@@ -30,4 +30,4 @@ def get_all_users_and_keys():
 
 
 if __name__ == '__main__':
-    print(json.dumps(get_all_users_and_keys()))
+    print(json.dumps(get_all_users_and_keys(), indent=4))
