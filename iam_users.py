@@ -4,6 +4,7 @@ import boto3
 import sys
 import logging
 import json
+import click
 from botocore.exceptions import NoCredentialsError
 
 iam = boto3.client('iam')
@@ -29,5 +30,22 @@ def get_all_users_and_keys():
     return output
 
 
+@click.command()
+@click.option('--pretty', is_flag=True, default=False,
+              help="easier for humans read")
+@click.option('--filename', type=click.File('w'),
+              help="Save output to a file instead of stdout")
+def generate_output(pretty, filename):
+    all_users = get_all_users_and_keys()
+    if pretty:
+        output = json.dumps(all_users, indent=4)
+    else:
+        output = json.dumps(all_users)
+    if not filename:
+        print(output)
+    else:
+        filename.write(output)
+
+
 if __name__ == '__main__':
-    print(json.dumps(get_all_users_and_keys(), indent=4))
+    generate_output()
