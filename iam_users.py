@@ -5,7 +5,7 @@ import sys
 import logging
 import json
 import click
-from botocore.exceptions import NoCredentialsError
+from botocore.exceptions import NoCredentialsError, EndpointConnectionError
 
 iam = boto3.client('iam')
 
@@ -17,7 +17,10 @@ def list_users():
         logging.info('Got {} users: {}'.format(len(users), ', '.join(users)))
         return users
     except NoCredentialsError:
-        logging.error('Unable to locate credentials')
+        logging.exception('Unable to locate credentials')
+        sys.exit(1)
+    except EndpointConnectionError:
+        logging.exception('Unable to connect to IAM endpoint')
         sys.exit(1)
 
 
