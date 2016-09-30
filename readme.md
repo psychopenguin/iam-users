@@ -25,7 +25,8 @@ You need python3 to run this script. It's recommended to use a virtualenv (virtu
 Usage: iam_users.py [OPTIONS]
 
 Options:
-  --pretty             easier for humans read
+  -p, --pretty         easier for humans read
   --filename FILENAME  Save output to a file instead of stdout
+  -v, --verbose        Set verbosity level (use twice to increase)
   --help               Show this message and exit.
 ```
